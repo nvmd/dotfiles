@@ -15,3 +15,5 @@ export HISTCONTROL=ignoreboth # same as ignoredups:ignorespace
 
 # Command aliases
 alias diff='colordiff'
+alias ll='ls -l --human-readable --kibibytes'
+alias la='ll --all'
