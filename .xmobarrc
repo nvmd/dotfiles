@@ -1,6 +1,6 @@
 Config { 
-         font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
---       font = "xft:inconsolata:size=8:antialias=true"
+--       font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
+	 font = "xft:terminus:size=8:antialias=true"
        , borderColor = "black"
        , border = TopB
        , bgColor = "black"
