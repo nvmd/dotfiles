@@ -13,7 +13,7 @@ main = xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig
 -- Command to launch the bar.
 myBar = "xmobar"
 
--- Custom PP, configure it as you like. It determines what is being written to the bar.
+-- Custom PP, determines what is being written to the bar.
 myPP = xmobarPP { ppCurrent = xmobarColor "#429942" "" . wrap "<" ">"
                 , ppSep = " | "
                 , ppTitle = xmobarColor "green" "" . shorten 85
@@ -22,7 +22,15 @@ myPP = xmobarPP { ppCurrent = xmobarColor "#429942" "" . wrap "<" ">"
 -- Key binding to toggle the gap for the bar.
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
 
--- Main configuration, override the defaults to your liking.
+terminalCmd = "urxvt"
+dmenuRunCmd = "dmenu_run -b -f -i -p \"$ \""
+
+-- Main configuration
 --myConfig = defaultConfig { modMask = mod4Mask }
-myConfig = defaultConfig { terminal = "urxvt" } `additionalKeys` [ ((mod4Mask, xK_l), spawn "xscreensaver-command -lock") ]
+myConfig = defaultConfig { terminal = terminalCmd }
+           `additionalKeys`
+           [ ((mod4Mask, xK_l), spawn "xscreensaver-command -lock")
+           , ((mod1Mask, xK_p), spawn dmenuRunCmd) -- overriding default command
+--         , ((mod4Mask, xK_r), spawn dmenuRunCmd) ] -- additional, windows-like
+           ]
 
