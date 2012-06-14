@@ -8,6 +8,9 @@
 alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 
+# Add directories to the path
+export PATH=$PATH:$HOME/.cabal/bin
+
 # The history file size, lines
 export HISTSIZE=1000
 # Avoid storing duplicates and whitespaces in the history file

@@ -23,7 +23,7 @@ myPP = xmobarPP { ppCurrent = xmobarColor "#429942" "" . wrap "<" ">"
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
 
 terminalCmd = "urxvt"
-dmenuRunCmd = "dmenu_run -b -f -i -p \"$ \""
+dmenuRunCmd = "cmd=$(yeganesh --executables -- -b -f -i -p \"$ \") && exec $cmd"
 
 -- Main configuration
 --myConfig = defaultConfig { modMask = mod4Mask }
