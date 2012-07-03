@@ -5,6 +5,7 @@ Config {
        , border = TopB
        , bgColor = "black"
        , fgColor = "grey"
+--     , position = TopW L 90
        , position = Top
        , lowerOnStart = True
        , commands = [ Run StdinReader
