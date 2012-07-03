@@ -1,0 +1,21 @@
+Xft.autohint: 0
+Xft.lcdfilter:  lcddefault
+Xft.hintstyle:  hintfull
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.rgba: rgb
+
+! URxvt configuration
+! Scrollbar style - rxvt (default), plain, next, xterm
+URxvt.scrollstyle: plain
+! Font
+URxvt.font: xft:terminus:size=10
+URxvt.boldFont: xft:terminus:bold:size=10
+!URxvt.font: 7x13
+! URxvt Extensions
+! matcher - Make URLs clickable and open them in Firefox
+! clipboard - Automatically copy any selection in rxvt-unicode to the X clipboard
+URxvt.perl-ext-common: default,matcher,clipboard
+! matcher extension settings
+URxvt.urlLauncher: firefox
+URxvt.matcher.button: 1
