@@ -1,0 +1,20 @@
+XXkb.group.base: 1
+XXkb.group.alt: 2
+
+XXkb.mainwindow.enable: yes
+XXkb.mainwindow.type: tray
+XXkb.mainwindow.geometry: 15x15+0+0
+
+XXkb.mainwindow.label.enable: yes
+
+XXkb.mainwindow.label.font: xft:terminus:size=8:antialias=true
+XXkb.mainwindow.label.background: #000000
+XXkb.mainwindow.label.foreground: #BFBFBF
+
+XXkb.mainwindow.label.text.1: US
+XXkb.mainwindow.label.text.2: RU
+
+XXkb.controls.add_when_start: no
+XXkb.controls.add_when_change: yes
+XXkb.controls.focusout: yes
+XXkb.controls.mainwindow_delete: no
