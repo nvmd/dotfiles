@@ -9,7 +9,9 @@ alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 
 # Add directories to the path
-export PATH=$PATH:$HOME/.cabal/bin
+export PATH=$PATH:$HOME/bin:$HOME/.cabal/bin
+
+export EDITOR=vim
 
 # The history file size, lines
 export HISTSIZE=1000
