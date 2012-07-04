@@ -2,7 +2,6 @@ import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Hooks.ManageDocks
-import XMonad.Actions.CopyWindow -- for kill1
 
 -- main = do
 --	xmonad $ defaultConfig
@@ -15,7 +14,7 @@ main = xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig
 myManageHook = composeAll . concat $
            [[ className =? "Skype" --> doFloat ]
 -- Float Firefox dialog windows
-           ,[ (className =? "Firefox" <&&> resource =? "Dialog") --> doFloat ]
+           ,[(className =? "Firefox" <&&> resource =? "Dialog") --> doFloat ]
            ]
 
 -- Command to launch the bar.
@@ -43,6 +42,17 @@ myConfig = defaultConfig {
            [ ((mod4Mask, xK_l), spawn "xscreensaver-command -lock")
            , ((mod1Mask, xK_p), spawn dmenuRunCmd) -- overriding default command
 --         , ((mod4Mask, xK_r), spawn dmenuRunCmd) -- additional, windows-like
---           , ((mod1Mask .|. shiftMask, xK_c), kill1) -- close the focused window
+             -- XF86AudioMute
+           , ((0, 0x1008ff12), spawn "amixer -q set Master,0 toggle")
+             -- XF86AudioRaiseVolume
+           , ((0, 0x1008ff13), spawn "amixer -q set Master,0 1000+")
+             -- XF86AudioLowerVolume
+           , ((0, 0x1008ff11), spawn "amixer -q set Master,0 1000-")
+             -- Ctrl+XF86AudioMute=microphone mute (till i figure out how to use dedicated hw button)
+           , ((controlMask, 0x1008ff12), spawn "amixer -q set Capture,0 toggle")
+             -- Ctrl+XF86AudioRaiseVolume=microphone raise volume
+           , ((controlMask, 0x1008ff13), spawn "amixer -q set Capture,0 1000+")
+             -- Ctrl+XF86AudioLowerVolume=microphone lower volume
+           , ((controlMask, 0x1008ff11), spawn "amixer -q set Capture,0 1000-")
            ]
 
