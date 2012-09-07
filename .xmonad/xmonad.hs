@@ -2,6 +2,7 @@ import XMonad
 import XMonad.Hooks.DynamicLog
 import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Hooks.ManageDocks
+import XMonad.Util.WorkspaceCompare	-- for getSortByXineramaRule
 
 -- main = do
 --	xmonad $ defaultConfig
@@ -21,15 +22,21 @@ myManageHook = composeAll . concat $
 myBar = "xmobar"
 
 -- Custom PP, determines what is being written to the bar.
-myPP = xmobarPP { ppCurrent = xmobarColor "#429942" "" . wrap "<" ">"
-                , ppSep = " | "
-                , ppTitle = xmobarColor "green" "" . shorten 85
+--currentWorkspaceColor = "#429942"
+currentWorkspaceColor = "#FF0000"	-- red
+--visibleWorkspaceColor = "#00AAFF"
+visibleWorkspaceColor = "#1E90FF"	-- dodgerblue 1 (dodgerblue)
+myPP = xmobarPP { ppCurrent = xmobarColor currentWorkspaceColor "" -- . wrap "<" ">"
+                , ppVisible = xmobarColor visibleWorkspaceColor "" . wrap "[" "]"
+                , ppSort    = getSortByXineramaRule
+                , ppSep     = " | "
+                , ppTitle   = xmobarColor "green" "" . shorten 85
                 }
 
 -- Key binding to toggle the gap for the bar.
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
 
-terminalCmd = "urxvt"
+terminalCmd = "urxvtc"
 dmenuRunCmd = "cmd=$(yeganesh --executables -- -b -f -i -p \"$ \") && exec $cmd"
 
 -- Main configuration
@@ -45,9 +52,9 @@ myConfig = defaultConfig {
              -- XF86AudioMute
            , ((0, 0x1008ff12), spawn "amixer -q set Master,0 toggle")
              -- XF86AudioRaiseVolume
-           , ((0, 0x1008ff13), spawn "amixer -q set Master,0 1000+")
+           , ((0, 0x1008ff13), spawn "amixer -q set Master,0 5%+")
              -- XF86AudioLowerVolume
-           , ((0, 0x1008ff11), spawn "amixer -q set Master,0 1000-")
+           , ((0, 0x1008ff11), spawn "amixer -q set Master,0 5%-")
              -- Ctrl+XF86AudioMute=microphone mute (till i figure out how to use dedicated hw button)
            , ((controlMask, 0x1008ff12), spawn "amixer -q set Capture,0 toggle")
              -- Ctrl+XF86AudioRaiseVolume=microphone raise volume
