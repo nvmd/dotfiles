@@ -1,7 +1,7 @@
 XXkb.group.base: 1
 XXkb.group.alt: 2
 
-XXkb.mainwindow.enable: yes
+XXkb.mainwindow.enable: no
 XXkb.mainwindow.type: tray
 XXkb.mainwindow.geometry: 15x15+0+0
 
