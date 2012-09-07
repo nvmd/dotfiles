@@ -1,25 +1,56 @@
 Config { 
---       font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
-	 font = "xft:terminus:size=8:antialias=true"
-       , borderColor = "black"
-       , border = TopB
-       , bgColor = "black"
-       , fgColor = "grey"
---     , position = TopW L 90
-       , position = Top
-       , lowerOnStart = True
-       , commands = [ Run StdinReader
---                  , Run Weather "ULLI" ["-t","<station>: <tempC>C, <rh>% (<hour>)","-L","18","-H","25","--normal","green","--high","red","--low","lightblue"] 36000
-                    , Run Weather "ULLI" ["-t","<tempC>C, <rh>% (<hour>)","-L","18","-H","25","--normal","green","--high","red","--low","lightblue"] 36000
-                    , Run Battery [] 10
---                    , Run Network "wlan0" ["-L","0","-H","32","--normal","green","--high","red"] 10
-                    , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
-                    , Run Memory ["-t","Mem: <usedratio>%"] 10
-                    , Run Swap [] 10
-    		    , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
-                    ]
+--   font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
+--   font = "xft:terminus:size=8" --:antialias=true"
+    font = "xft:consolas:size=8"
+--    font = "xft:dejavu sans mono:size=7.8"
+--    font = "xft:bitstream vera sans mono:size=8"
+  , borderColor = "black"
+  , border = TopB
+  , bgColor = "black"
+  , fgColor = "grey"
+--, position = TopW L 90
+  , position = Top
+  , lowerOnStart = True
+  , commands = [ Run StdinReader
+               , Run Kbd [("us", "US"), ("ru", "RU")]
+               , Run Weather "ULLI" [ "-t", "<tempC>C, <rh>% (<hour>)"
+                                    , "-L", "18"
+                                    , "-H", "25"
+                                    , "--normal", "green"
+                                    , "--high",   "red"
+                                    , "--low",    "lightblue"
+--                                    , "--low",    "blue"
+                                    ] 36000
+               , Run Battery [ --"-t", "<leftbar> (<left>%)"
+                               "-t", "<left>% (<timeleft>)"
+                             ] 10
+               , Run Wireless "wlan0" [ --"-t",    "<essid>: <qualitybar>"
+                                        "-t",    "<essid>: <quality>%"
+                                      , "-L",    "25"
+                                      , "-H",    "75"
+                                      , "--low",    "red"
+                                      , "--normal", "yellow"
+                                      , "--high",   "green"
+                                      ] 100
+--               , Run Network "wlan0" [ "-L", "0"
+--                                     , "-H", "32"
+--                                     , "--normal", "green"
+--                                     , "--high",   "red"
+--                                     ] 10
+               , Run Cpu [ "-t", "<total>%"
+                         , "-L", "3"
+                         , "-H", "50"
+                         , "--normal", "green"
+                         , "--high",   "red"
+                         ] 10
+               , Run Memory [ "-t", "<usedratio>%"
+                            ] 10
+               , Run Swap [ "-t", "<usedratio>%"
+                          ] 10
+               , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
+               ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% } {%cpu% %memory% %swap% | %battery% | %ULLI% | <fc=#ee9a00>%date%</fc>"
+       , template = "%StdinReader% } {%kbd% | %cpu%:%memory%:%swap% | %battery% | %wlan0wi% | %ULLI% | <fc=#ee9a00>%date%</fc>"
        }
 
