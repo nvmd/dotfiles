@@ -9,7 +9,7 @@ alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 
 # Add directories to the path
-export PATH=$PATH:$HOME/bin:$HOME/.cabal/bin
+#export PATH=$PATH:$HOME/bin:$HOME/.cabal/bin
 
 export EDITOR=vim
 
@@ -17,6 +17,10 @@ export EDITOR=vim
 export HISTSIZE=1000
 # Avoid storing duplicates and whitespaces in the history file
 export HISTCONTROL=ignoreboth # same as ignoredups:ignorespace
+
+# java applications' options
+export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"
+export _JAVA_AWT_WM_NONREPARENTING=1
 
 # If set, bash checks the window size after each command and,
 # if necessary, updates the values of LINES and COLUMNS

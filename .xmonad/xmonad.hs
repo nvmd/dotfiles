@@ -3,6 +3,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Hooks.ManageDocks
 import XMonad.Util.WorkspaceCompare	-- for getSortByXineramaRule
+import XMonad.Hooks.SetWMName
 
 -- main = do
 --	xmonad $ defaultConfig
@@ -45,6 +46,7 @@ myConfig = defaultConfig {
              terminal = terminalCmd
 --           , layoutHook = avoidStruts $ layoutHook defaultConfig
            , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
+           , startupHook = setWMName "LG3D"
            } `additionalKeys`
            [ ((mod4Mask, xK_l), spawn "xscreensaver-command -lock")
            , ((mod1Mask, xK_p), spawn dmenuRunCmd) -- overriding default command
