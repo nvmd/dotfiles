@@ -24,6 +24,8 @@ myManageHook = composeAll . concat $
            [[ className =? "Skype" --> doFloat ]
            ,[ className =? "Xmessage" --> doFloat ]
            ,[ className =? "Nm-connection-editor" --> doFloat ]
+-- just to prevent it from being moved by placeHook
+           ,[ resource =? "sun-awt-X11-XDialogPeer" --> doFloat ]
            ,[(className =? "Firefox" <&&> resource =? "Download") --> doFloat]
 -- Float Firefox dialog windows
            ,[(className =? "Firefox" <&&> resource =? "Dialog") --> doFloat ]
