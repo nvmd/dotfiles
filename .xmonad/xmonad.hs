@@ -61,9 +61,12 @@ dmenuRunCmd = "cmd=$(yeganesh --executables -- -b -f -i -p \"$ \") && exec $cmd"
 myConfig = defaultConfig {
              terminal = terminalCmd
            , layoutHook = avoidStruts $ layoutHook defaultConfig
-           , manageHook = placeHook (inBounds (underMouse (0.5,0.5))) <+> -- simpleSmart
+           , manageHook = myManageHook <+>
+                          placeHook (inBounds (underMouse (0.5,0.5))) <+> -- simpleSmart
                           floatNextHook <+>
-                          manageDocks <+> myManageHook <+> manageHook defaultConfig
+                          manageDocks <+>
+--                          myManageHook <+>
+                          manageHook defaultConfig
            , startupHook = setWMName "LG3D"
            } `additionalKeys`
            [ ((mod4Mask, xK_l), spawn "xscreensaver-command -lock")
