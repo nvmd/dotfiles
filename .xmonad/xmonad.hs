@@ -7,6 +7,15 @@ import XMonad.Hooks.SetWMName
 import XMonad.Layout.SimpleFloat
 import XMonad.Hooks.FloatNext
 import XMonad.Hooks.Place
+import XMonad.Hooks.ICCCMFocus	-- issue #177 workaround. works only for JDK6...
+import XMonad.Hooks.ManageHelpers
+import XMonad.Actions.FloatKeys
+
+-- emacs-like shortcuts experiments
+import XMonad.Actions.Submap
+import qualified Control.Arrow as A
+import Data.Bits
+import qualified Data.Map as M
 
 -- main = do
 --	xmonad $ defaultConfig
@@ -16,19 +25,23 @@ import XMonad.Hooks.Place
 -- The main function.
 main = xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig
 
-myManageHook = composeAll . concat $
+myManageHook = composeAll . concat $ -- see also: composeOne
 -- To find the property name associated with a program, use
 -- xprop | grep WM_CLASS
 -- and click on the client you're interested in.
 -- xprop | grep WM_CLASS: WM_CLASS(STRING) = <resource>, <class>
-           [[ className =? "Skype" --> doFloat ]
+           [[ isDialog --> doFloat ]
+           ,[ className =? "Skype" --> doFloat ]
            ,[ className =? "Xmessage" --> doFloat ]
-           ,[ className =? "Nm-connection-editor" --> doFloat ]
+--           ,[ className =? "Nm-connection-editor" --> doFloat ]
 -- just to prevent it from being moved by placeHook
-           ,[ resource =? "sun-awt-X11-XDialogPeer" --> doFloat ]
+--           ,[ resource =? "sun-awt-X11-XDialogPeer" --> doFloat ]
+           ,[ resource =? "xfce4-notifyd" --> doFloat ]
+           ,[(className =? "Firefox" <&&> resource =? "Browser") --> doFloat]
            ,[(className =? "Firefox" <&&> resource =? "Download") --> doFloat]
+           ,[ title =? "Firefox Preferences" -->doFloat ]
 -- Float Firefox dialog windows
-           ,[(className =? "Firefox" <&&> resource =? "Dialog") --> doFloat ]
+--           ,[(className =? "Firefox" <&&> resource =? "Dialog") --> doFloat ]
            ]
 
 -- Command to launch the bar.
@@ -57,23 +70,41 @@ toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
 
 terminalCmd = "urxvtc"
 dmenuRunCmd = "cmd=$(yeganesh --executables -- -b -f -i -p \"$ \") && exec $cmd"
+--dmenuRunCmd = "cmd=$(yeganesh --executables -- -b -f -i -p "$") && exec $cmd"
+--dmenuRunCmd = "yeganesh --executables -- -b -f -i -p "$""
 
 -- Main configuration
 --myConfig = defaultConfig { modMask = mod4Mask }
-myConfig = defaultConfig {
+
+addPrefix p ms conf =
+    M.singleton p . submap $ M.mapKeys (A.first chopMod) (ms conf)
+    where
+        mod     = modMask conf
+        chopMod = (.&. complement mod)
+
+myConfig = myConfig2
+--           {
+--             keys = addPrefix (controlMask, xK_m) (keys myConfig2)
+--           }
+
+myConfig2 = defaultConfig {
              terminal = terminalCmd
            , layoutHook = avoidStruts $ layoutHook defaultConfig
            , manageHook = myManageHook <+>
-                          placeHook (inBounds (underMouse (0.5,0.5))) <+> -- simpleSmart
+--                          placeHook (inBounds (underMouse (0.5,0.5))) <+> -- simpleSmart
                           floatNextHook <+>
                           manageDocks <+>
 --                          myManageHook <+>
                           manageHook defaultConfig
            , startupHook = setWMName "LG3D"
+           , logHook = takeTopFocus	-- issue #177 workaround
            } `additionalKeys`
            [ ((mod4Mask, xK_l), spawn "xscreensaver-command -lock")
            , ((mod1Mask, xK_p), spawn dmenuRunCmd) -- overriding default command
 --         , ((mod4Mask, xK_r), spawn dmenuRunCmd) -- additional, windows-like
+           , ((mod4Mask, xK_e), spawn "dolphin") --spawn "thunar")
+           , ((mod1Mask .|. shiftMask, xK_a),
+                                withFocused $ keysMoveWindowTo (0, 0) (0, 0))
              -- XF86AudioMute
            , ((0, 0x1008ff12), spawn "amixer -q set Master,0 toggle")
              -- XF86AudioRaiseVolume
