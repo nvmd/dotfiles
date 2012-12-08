@@ -35,8 +35,7 @@ myManageHook = composeAll . concat $ -- see also: composeOne
            [[ isDialog --> doFloat ]
            ,[ className =? "Skype" --> doFloat ]
            ,[ className =? "Xmessage" --> doFloat ]
--- just to prevent it from being moved by placeHook
---           ,[ resource =? "sun-awt-X11-XDialogPeer" --> doFloat ]
+           ,[ resource =? "sun-awt-X11-XDialogPeer" --> doFloat ]
            ,[ resource =? "xfce4-notifyd" --> doFloat ]
            ,[(className =? "Firefox" <&&> resource =? "Browser") --> doFloat]
            ,[(className =? "Firefox" <&&> resource =? "Download") --> doFloat]
@@ -50,7 +49,7 @@ myBar = "xmobar"
 currentWorkspaceColor = "#FF0000"	-- red
 visibleWorkspaceColor = "#1E90FF"	-- dodgerblue 1 (dodgerblue)
 titleColor = "green"
-maxTitleLength = 85
+maxTitleLength = 95
 myPP = xmobarPP { ppCurrent = xmobarColor currentWorkspaceColor "" -- . wrap "<" ">"
                 , ppVisible = xmobarColor visibleWorkspaceColor "" . wrap "[" "]"
 --                , ppSort    = getSortByXineramaRule
@@ -69,6 +68,9 @@ toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
 
 terminalCmd = "urxvtc"
 dmenuRunCmd = "cmd=$(yeganesh --executables -- -b -f -i -p \"$ \") && exec $cmd"
+--lockScreenCmd = "xscreensaver-command -lock"
+lockScreenCmd = "xlock -mode blank -bg black -dpmsstandby 6 -dpmssuspend 15 -dpmsoff 30"
+
 
 -- emacs-like shortcuts experiments
 --addPrefix p ms conf =
@@ -97,7 +99,7 @@ myConfig2 = defaultConfig {
            , startupHook = setWMName "LG3D"
            , logHook = takeTopFocus	-- issue #177 workaround
            } `additionalKeys`
-           [ ((mod4Mask, xK_l), spawn "xscreensaver-command -lock")
+           [ ((mod4Mask, xK_l), spawn lockScreenCmd)
            , ((mod1Mask, xK_p), spawn dmenuRunCmd) -- overriding default command
 --         , ((mod4Mask, xK_r), spawn dmenuRunCmd) -- additional, windows-like
            , ((mod4Mask, xK_e), spawn "dolphin")
