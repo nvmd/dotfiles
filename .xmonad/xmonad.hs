@@ -101,10 +101,10 @@ myConfig2 = defaultConfig {
            } `additionalKeys`
            [ ((controlMask .|. mod1Mask, xK_l), spawn lockScreenCmd)
 --           , ((mod4Mask, xK_l), spawn lockScreenCmd)
-           , ((mod1Mask, xK_p), spawn dmenuRunCmd) -- overriding default command
+           , ((mod4Mask, xK_p), spawn dmenuRunCmd) -- overriding default command
 --         , ((mod4Mask, xK_r), spawn dmenuRunCmd) -- additional, windows-like
            , ((mod4Mask, xK_e), spawn "dolphin")
-           , ((mod1Mask .|. shiftMask, xK_a),
+           , ((mod4Mask .|. shiftMask, xK_a),
                                 withFocused $ keysMoveWindowTo (0, 0) (0, 0))
              -- XF86AudioMute = 0x1008ff12
            , ((0, xF86XK_AudioMute), spawn "amixer -q set Master,0 toggle")
