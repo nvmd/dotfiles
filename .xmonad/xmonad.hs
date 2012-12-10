@@ -88,7 +88,7 @@ myConfig = myConfig2
 myConfig2 = defaultConfig {
              terminal = terminalCmd
 --           , modMask = mod1Mask -- alt
---           , modMask = mod4Mask -- super
+           , modMask = mod4Mask -- super
            , layoutHook = avoidStruts $ layoutHook defaultConfig
            , manageHook = myManageHook <+>
 --                          placeHook (inBounds (underMouse (0.5,0.5))) <+> -- simpleSmart
@@ -99,7 +99,8 @@ myConfig2 = defaultConfig {
            , startupHook = setWMName "LG3D"
            , logHook = takeTopFocus	-- issue #177 workaround
            } `additionalKeys`
-           [ ((mod4Mask, xK_l), spawn lockScreenCmd)
+           [ ((controlMask .|. mod1Mask, xK_l), spawn lockScreenCmd)
+--           , ((mod4Mask, xK_l), spawn lockScreenCmd)
            , ((mod1Mask, xK_p), spawn dmenuRunCmd) -- overriding default command
 --         , ((mod4Mask, xK_r), spawn dmenuRunCmd) -- additional, windows-like
            , ((mod4Mask, xK_e), spawn "dolphin")
