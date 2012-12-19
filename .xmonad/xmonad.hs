@@ -14,7 +14,8 @@ import XMonad.Config.Kde (kde4Config)
 import Graphics.X11.ExtraTypes.XF86 (xF86XK_AudioMute,
                                      xF86XK_AudioRaiseVolume,
                                      xF86XK_AudioLowerVolume)
-
+-- Xfce interpoperability + see below
+import XMonad.Hooks.EwmhDesktops
 -- emacs-like shortcuts experiments
 -- see also XMonad.Util.EZConfig.mkKeymap
 --import XMonad.Actions.Submap
@@ -84,6 +85,8 @@ lockScreenCmd = "xlock -mode blank -bg black -dpmsstandby 6 -dpmssuspend 15 -dpm
 --             keys = addPrefix (controlMask, xK_m) (keys myConfig2)
 --           }
 
+
+-- NOTE: ewmh* hooks was added for better interpoperatibility with xfce
 myConfig = myConfig2
 myConfig2 = defaultConfig {
              terminal = terminalCmd
@@ -97,7 +100,11 @@ myConfig2 = defaultConfig {
 --                          myManageHook <+>
                           manageHook defaultConfig
            , startupHook = setWMName "LG3D"
+                        <+> ewmhDesktopsStartup
            , logHook = takeTopFocus	-- issue #177 workaround
+                    <+> ewmhDesktopsLogHook
+           , handleEventHook = ewmhDesktopsEventHook
+                            <+> handleEventHook defaultConfig
            } `additionalKeys`
            [ ((controlMask .|. mod1Mask, xK_l), spawn lockScreenCmd)
 --           , ((mod4Mask, xK_l), spawn lockScreenCmd)
